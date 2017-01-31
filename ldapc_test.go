@@ -3,7 +3,7 @@ package ldapc_test
 import (
 	"fmt"
 
-	"github.com/sona-tar/go-ldapc"
+	"github.com/juliengk/go-ldapc"
 )
 
 // User Authentication shows how a typical application can verify a login attempt

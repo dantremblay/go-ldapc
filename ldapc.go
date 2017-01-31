@@ -1,22 +1,12 @@
-// Package ldapc provides easy LDAP v3 authentication.
-// Set LDAPC_DEBUG=yes to environment value then print debug log
 package ldapc
 
 import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"log"
-	"os"
 
 	"gopkg.in/ldap.v2"
 )
-
-func debug(format string, args ...interface{}) {
-	if os.Getenv("LDAPC_DEBUG") != "" {
-		log.Printf(format, args...)
-	}
-}
 
 // Protocol:  LDAP, LDAPS and START_TLS
 type Protocol int
@@ -56,7 +46,6 @@ func (c *Client) Authenticate(username, password string) (*ldap.Entry, error) {
 
 func (c *Client) dial() (*ldap.Conn, error) {
 	if c.Protocol == LDAPS {
-		debug("LDAP Auth : Start LDAPS Protocol\n")
 		return ldap.DialTLS("tcp", fmt.Sprintf("%s:%d", c.Host, c.Port), c.TLSConfig)
 	}
 
@@ -67,13 +56,10 @@ func (c *Client) dial() (*ldap.Conn, error) {
 
 	if c.Protocol == START_TLS {
 		if err = conn.StartTLS(c.TLSConfig); err != nil {
-			debug("LDAP Auth : Start TLS Protocol\n")
 			conn.Close()
 			return nil, fmt.Errorf("StartTLS: %v", err)
 		}
 	}
-
-	debug("LDAP Auth : Start LDAP Protocol\n")
 
 	return conn, nil
 }
