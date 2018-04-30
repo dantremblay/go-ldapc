@@ -7,7 +7,9 @@ You can provide LDAP based authentication on your web page easily.
 - Code:
 ```go
 import (
-    "github.com/juliengk/ldapc"
+	"fmt"
+
+	"github.com/juliengk/go-ldapc"
 )
 
 func main() {
