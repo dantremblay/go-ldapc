@@ -17,9 +17,7 @@ func userFilter(filter string, username string) string {
 }
 
 func search(conn *ldap.Conn, username string, baseDN string, filter string) (*ldap.Entry, error) {
-	request := ldap.NewSearchRequest(
-		baseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0,
-		false, filter, nil, nil)
+	request := ldap.NewSearchRequest(baseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, filter, nil, nil)
 
 	result, err := conn.Search(request)
 	if err != nil {
