@@ -31,9 +31,7 @@ func search(conn *ldap.Conn, username string, baseDN string, filter string) (*ld
 	return result.Entries[0], nil
 }
 
-/*
-AuthBind struct required to run ldap operation.
-*/
+// AuthBind struct required to run ldap operation.
 type AuthBind struct {
 	// 1. LDAP Bind operation with BindDN and BindPassword. Bind success then step 2.
 	// 2. LDAP Search operation with user's name, BaseDN and Filter. Search success then get UserDN and user's entry
@@ -57,7 +55,7 @@ func (b *AuthBind) auth(conn *ldap.Conn, username, password string) (*ldap.Entry
 	}
 
 	userDN := entry.DN
-	if userDN == "" {
+	if len(userDN) == 0 {
 		return nil, errors.New("LDAP search was successful, but found no DN!")
 	}
 
@@ -70,9 +68,7 @@ func (b *AuthBind) auth(conn *ldap.Conn, username, password string) (*ldap.Entry
 
 }
 
-/*
-DirectBind required to run ldap operation.
-*/
+// DirectBind required to run ldap operation.
 type DirectBind struct {
 	// 1. LDAP Bind operation with UserDN and user's password. Bind success then step 2.
 	// 2. LDAP Search operation with user's name, UserDN and Filter. Search success then get user's entry
